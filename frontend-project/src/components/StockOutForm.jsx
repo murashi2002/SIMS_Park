@@ -250,30 +250,35 @@ export default function StockOutForm() {
                 </tr>
               </thead>
               <tbody>
-                {stockOutRecords.map((record) => (
-                  <tr key={record.StockOutID} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-2">{record.StockOutID}</td>
-                    <td className="border border-gray-300 px-4 py-2">{record.Name}</td>
-                    <td className="border border-gray-300 px-4 py-2">{record.StockOutQuantity}</td>
-                    <td className="border border-gray-300 px-4 py-2">RWF {record.StockOutUnitPrice?.toFixed(2)}</td>
-                    <td className="border border-gray-300 px-4 py-2">RWF {record.StockOutTotalPrice?.toFixed(2)}</td>
-                    <td className="border border-gray-300 px-4 py-2">{new Date(record.StockOutDate).toLocaleDateString()}</td>
-                    <td className="border border-gray-300 px-4 py-2 space-x-2">
-                      <button
-                        onClick={() => handleEdit(record)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(record.StockOutID)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {stockOutRecords.map((record) => {
+                  const unitPrice = record.StockOutUnitPrice == null ? null : Number(record.StockOutUnitPrice);
+                  const totalPrice = record.StockOutTotalPrice == null ? null : Number(record.StockOutTotalPrice);
+
+                  return (
+                    <tr key={record.StockOutID} className="hover:bg-gray-50">
+                      <td className="border border-gray-300 px-4 py-2">{record.StockOutID}</td>
+                      <td className="border border-gray-300 px-4 py-2">{record.Name}</td>
+                      <td className="border border-gray-300 px-4 py-2">{record.StockOutQuantity}</td>
+                      <td className="border border-gray-300 px-4 py-2">RWF {unitPrice != null && !Number.isNaN(unitPrice) ? unitPrice.toFixed(2) : ''}</td>
+                      <td className="border border-gray-300 px-4 py-2">RWF {totalPrice != null && !Number.isNaN(totalPrice) ? totalPrice.toFixed(2) : ''}</td>
+                      <td className="border border-gray-300 px-4 py-2">{new Date(record.StockOutDate).toLocaleDateString()}</td>
+                      <td className="border border-gray-300 px-4 py-2 space-x-2">
+                        <button
+                          onClick={() => handleEdit(record)}
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(record.StockOutID)}
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

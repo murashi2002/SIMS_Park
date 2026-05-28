@@ -168,16 +168,21 @@ export default function SparePartForm() {
                 </tr>
               </thead>
               <tbody>
-                {spareParts.map((part) => (
-                  <tr key={part.SparePartID} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-2">{part.SparePartID}</td>
-                    <td className="border border-gray-300 px-4 py-2">{part.Name}</td>
-                    <td className="border border-gray-300 px-4 py-2">{part.Category}</td>
-                    <td className="border border-gray-300 px-4 py-2">{part.Quantity}</td>
-                    <td className="border border-gray-300 px-4 py-2">RWF {part.UnitPrice?.toFixed(2)}</td>
-                    <td className="border border-gray-300 px-4 py-2">RWF {part.TotalPrice?.toFixed(2)}</td>
-                  </tr>
-                ))}
+                {spareParts.map((part) => {
+                  const unitPrice = part.UnitPrice == null ? null : Number(part.UnitPrice);
+                  const totalPrice = part.TotalPrice == null ? null : Number(part.TotalPrice);
+
+                  return (
+                    <tr key={part.SparePartID} className="hover:bg-gray-50">
+                      <td className="border border-gray-300 px-4 py-2">{part.SparePartID}</td>
+                      <td className="border border-gray-300 px-4 py-2">{part.Name}</td>
+                      <td className="border border-gray-300 px-4 py-2">{part.Category}</td>
+                      <td className="border border-gray-300 px-4 py-2">{part.Quantity}</td>
+                      <td className="border border-gray-300 px-4 py-2">RWF {unitPrice != null && !Number.isNaN(unitPrice) ? unitPrice.toFixed(2) : ''}</td>
+                      <td className="border border-gray-300 px-4 py-2">RWF {totalPrice != null && !Number.isNaN(totalPrice) ? totalPrice.toFixed(2) : ''}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
